@@ -2,11 +2,11 @@ export default {
   id: 'ai-booth',
   sort: 2025.11,
   title: 'AI를 속여라! — 비전 AI 체험 부스',
-  oneLiner: 'YOLOv8·MediaPipe로 만든 6가지 체험 모드로, AI를 처음 접하는 방문객에게 "AI가 세상을 어떻게 보는지" 설명했습니다.',
+  oneLiner: '부스를 기획하고 YOLOv8·MediaPipe 체험 앱을 직접 짜서, 6가지 체험 모드로 AI를 처음 접하는 방문객에게 "AI가 세상을 어떻게 보는지" 설명했습니다.',
   period: '2025.11',
   context: '지역 산학 페스티벌 부스 운영 (동아리)',
-  roleShort: '부스 운영·체험 설명',
-  team: '동아리 팀',
+  roleShort: '부스 기획 · 체험 앱 개발',
+  team: '동아리 팀 (운영은 팀원 전체 교대)',
   award: null,
   cover: null,
   metrics: [
@@ -27,7 +27,9 @@ export default {
     ],
   ],
   role: [
-    '부스에서 방문객에게 체험을 안내하고 "AI가 얼굴을 찾는 원리"를 설명했습니다.',
+    '부스 콘셉트("AI를 속여라!")와 체험 구성, 상품 규칙을 기획했습니다.',
+    '6가지 체험 모드가 들어간 Python 앱(YOLOv8·MediaPipe·OpenCV·Tkinter)을 직접 작성했습니다.',
+    '현장 운영과 설명은 팀원 전체가 교대로 맡았고, 저도 방문객에게 "AI가 얼굴을 찾는 원리"를 설명했습니다.',
   ],
   result: [
     '설문 83명 응답: 스태프 설명이 이해에 도움이 됐다 평균 4.5점(5점 65%), 반응 속도 4.3점. 가장 인기 있던 체험은 "AI가 보는 내 얼굴"(53%)이었습니다.',
@@ -47,5 +49,5 @@ export default {
   },
   links: [],
   note: ['부스 사진은 방문객 얼굴이 포함되어 싣지 않았습니다.'],
-  pdf: { line: 'YOLOv8·MediaPipe 비전 AI 체험 부스 운영, 83명 설문 "설명 이해 도움" 4.5/5' },
+  pdf: { line: '비전 AI 체험 부스 기획 + YOLOv8·MediaPipe 체험 앱 직접 개발, 83명 설문 "설명 이해 도움" 4.5/5' },
 }

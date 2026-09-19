@@ -17,7 +17,7 @@ export const archive = {
   ],
 
   activities: [
-    { date: '2025.11', title: '비전 AI 체험 부스 운영', desc: 'YOLOv8·MediaPipe 6종 체험, 83명 설문 설명 이해도 4.5/5', kind: '행사' },
+    { date: '2025.11', title: '비전 AI 체험 부스 기획·개발', desc: 'YOLOv8·MediaPipe 6종 체험 앱 직접 개발, 83명 설문 설명 이해도 4.5/5', kind: '행사' },
     { date: '2025.10', title: '산학연협력 EXPO 전시 참가', desc: '폐플라스틱 압축성형 업사이클링 체험 부스', kind: '행사' },
     { date: '2025.09', title: '로컬히어로즈 100 온라인 기본 교육', desc: '한국청년기업가정신재단 운영 · 수료', kind: '교육' },
     { date: '2025.09', title: '대한민국 안전산업박람회 벤치마킹', desc: '복합재난 대응 우수사례 현장 견학', kind: '견학' },
@@ -31,7 +31,7 @@ export const archive = {
   ],
 
   education: [
-    { date: '2027.02', title: '기계공학 전공 · 조선해양시스템공학 복수전공', desc: '누계 평점 4.45 / 4.5 · 졸업 예정', kind: '학력' },
+    { date: '2027.02', title: '기계공학 전공 · 조선해양시스템공학 복수전공', desc: '누계 평점 4.46 / 4.5 · 졸업 예정', kind: '학력' },
     { date: '2026.07 –', title: 'SK AX 채용연계형 AI 교육 SKALA 4기', desc: 'DT 직무 · 2026.07.14 – 12.11', kind: '교육' },
     { date: '2025.11', title: 'AICE Basic', desc: '100 / 100 (KT · 한국경제신문)', kind: '자격' },
     { date: '2025.11', title: 'HD현대이엔티 재직자 AI 교육 (업무혁신과 파이썬 기초)', desc: '40시간 · 재직자와 협업 프로젝트 수행', kind: '교육' },

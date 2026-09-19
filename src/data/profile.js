@@ -8,18 +8,18 @@ export const profile = {
   education: {
     major: '기계공학 전공',
     double: '조선해양시스템공학 복수전공',
-    gpa: '4.45 / 4.5', // 누계 평점 — 최신 성적증명서 기준으로 갱신
+    gpa: '4.46 / 4.5', // 누계 평점
     graduation: '2027.02 졸업 예정',
   },
   facts: [
     { label: 'MAJOR', value: '기계공학 · 조선해양 복수전공' },
-    { label: 'GPA', value: '4.45 / 4.5' },
+    { label: 'GPA', value: '4.46 / 4.5' },
     { label: 'NOW', value: 'SK AX SKALA 4기 · DT' },
     { label: 'CERT', value: '기계설계기사 · AICE Basic 100점' },
   ],
   contacts: [
     { label: 'GitHub', text: 'thanksdooss', href: 'https://github.com/thanksdooss' },
-    // 이메일은 공개 여부를 정한 뒤 추가: { label: 'Email', text: '...', href: 'mailto:...' },
+    { label: 'Email', text: 'thanksdooss@naver.com', href: 'mailto:thanksdooss@naver.com' },
   ],
 }
 
@@ -40,7 +40,7 @@ export const strengths = [
   {
     id: 'explain',
     title: '설명하고 설득합니다',
-    body: '해커톤 대상 발표, 기업 우수사례 발표, 83명 대상 AI 부스 운영. 기술을 듣는 사람의 언어로 바꿔 전달합니다.',
+    body: '해커톤 대상 발표, 기업 우수사례 발표, AI 체험 부스 기획(83명 설문). 기술을 듣는 사람의 언어로 바꿔 전달합니다.',
     proof: '부스 설명 이해도 4.5 / 5 (83명 응답)',
   },
 ]
