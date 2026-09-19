@@ -9,7 +9,7 @@ export const profile = {
     major: '기계공학 전공',
     double: '조선해양시스템공학 복수전공',
     gpa: '4.46 / 4.5', // 누계 평점
-    graduation: '2027.02 졸업 예정',
+    graduation: '2026년 1학기까지 이수 후 중퇴 (SKALA 채용연계 과정 전념)',
   },
   facts: [
     { label: 'MAJOR', value: '기계공학 · 조선해양 복수전공' },
