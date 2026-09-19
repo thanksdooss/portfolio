@@ -12,6 +12,8 @@ const { track } = useTrack()
 const projects = computed(() => skala.projects.filter((id) => !track.featured.includes(id)).map(getProject).filter(Boolean))
 const pin = ref(null)
 const rail = ref(null)
+const prog = ref(0)
+const months = ['07', '08', '09', '10', '11', '12']
 let ctx
 
 onMounted(() => {
@@ -21,7 +23,7 @@ onMounted(() => {
     const dist = () => rail.value.scrollWidth - window.innerWidth + 80
     const tween = gsap.to(rail.value, {
       x: () => -dist(), ease: 'none',
-      scrollTrigger: { trigger: pin.value, start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 0.6, invalidateOnRefresh: true },
+      scrollTrigger: { trigger: pin.value, start: 'top top', end: () => '+=' + dist() * 0.6, pin: true, scrub: 0.6, invalidateOnRefresh: true, onUpdate: (s) => (prog.value = s.progress) },
     })
     return () => tween.scrollTrigger?.kill()
   })
@@ -31,11 +33,11 @@ onUnmounted(() => ctx?.revert())
 </script>
 
 <template>
-  <section id="skala" class="skala">
+  <section id="skala" class="skala" data-section="SKALA">
     <div ref="pin" class="pin">
       <div class="wrap head">
         <p class="label"><b>●</b>&nbsp; SKALA 4th · {{ skala.period }}</p>
-        <h2 class="sec-title">과목마다, <span class="serif">남긴 것</span></h2>
+        <h2 v-split class="sec-title">과목마다, <span class="serif">남긴 것</span></h2>
         <p class="desc">{{ skala.title }} — {{ skala.desc }}</p>
       </div>
       <div class="viewport">
@@ -58,6 +60,10 @@ onUnmounted(() => ctx?.revert())
             <span class="serif soon">Coming soon</span>
           </li>
         </ol>
+      </div>
+      <div class="wrap scrub" aria-hidden="true">
+        <div class="track"><span class="fill" :style="{ transform: `scaleX(${prog})` }"></span></div>
+        <div class="months"><span v-for="(m, i) in months" :key="m" :class="{ on: prog >= i / (months.length - 1) - 0.001 }">2026.{{ m }}</span></div>
       </div>
     </div>
     <div v-if="projects.length" class="wrap extra">
@@ -90,10 +96,17 @@ h3 { font-size: 20px; letter-spacing: -0.035em; }
 .next { border-style: dashed; background: transparent; justify-content: flex-start; }
 .soon { font-size: 34px; color: var(--accent-ink); margin-top: auto; }
 .extra { padding-bottom: 120px; }
+.scrub { margin-top: 28px; width: 100%; }
+.track { height: 1px; background: var(--line); position: relative; }
+.fill { position: absolute; inset: 0; background: var(--accent); transform-origin: left; transform: scaleX(0); }
+.months { display: flex; justify-content: space-between; margin-top: 12px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: .08em; }
+.months span { transition: color .3s; }
+.months span.on { color: var(--ink); }
 @media (max-width: 859px), (prefers-reduced-motion: reduce) {
   .pin { min-height: 0; padding: 96px 0 72px; }
   .viewport { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   .viewport::-webkit-scrollbar { display: none; }
   .card { scroll-snap-align: start; width: 78vw; max-width: 320px; }
+  .scrub { display: none; }
 }
 </style>

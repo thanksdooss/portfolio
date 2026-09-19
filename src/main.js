@@ -2,8 +2,11 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import './styles/base.css'
+import { installMotion } from './composables/motion.js'
 
-createApp(App).use(router).mount('#app')
+const app = createApp(App).use(router)
+installMotion(app)
+app.mount('#app')
 
 // 개발 전용: ?y=1200 이면 로드 후 해당 위치로 스크롤 (헤드리스 스크린샷 검수용, 배포 빌드에는 포함되지 않음)
 if (import.meta.env.DEV) {

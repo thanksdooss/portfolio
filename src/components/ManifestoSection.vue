@@ -15,23 +15,16 @@ onMounted(() => {
       opacity: 1, stagger: 0.05, ease: 'none',
       scrollTrigger: { trigger: root.value.querySelector('.body'), start: 'top 78%', end: 'bottom 45%', scrub: true },
     })
-    root.value.querySelectorAll('.num').forEach((el) => {
-      const v = parseFloat(el.dataset.v)
-      if (Number.isNaN(v)) return
-      const o = { n: 0 }
-      gsap.to(o, {
-        n: v, duration: 1.6, ease: 'expo.out',
-        scrollTrigger: { trigger: el, start: 'top 90%' },
-        onUpdate: () => (el.textContent = o.n.toFixed(el.dataset.d)),
-      })
-    })
+    gsap.to('.glyph', { yPercent: -30, ease: 'none', scrollTrigger: { trigger: root.value, start: 'top bottom', end: 'bottom top', scrub: true } })
+    gsap.from('.stats li', { y: 60, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: 0.1, scrollTrigger: { trigger: '.stats', start: 'top 85%', once: true } })
   }, root.value)
 })
 onUnmounted(() => ctx?.revert())
 </script>
 
 <template>
-  <section ref="root" class="sec manifesto">
+  <section id="philosophy" ref="root" class="sec manifesto" data-section="Philosophy">
+    <span class="glyph" aria-hidden="true">現圖</span>
     <div class="wrap">
       <p class="label"><b>●</b>&nbsp; {{ manifesto.label }}</p>
       <div class="grid">
@@ -42,7 +35,7 @@ onUnmounted(() => ctx?.revert())
 
       <ul class="stats">
         <li v-for="s in stats" :key="s.label">
-          <span class="big"><span class="num" :data-v="s.unit ? s.value : ''" :data-d="(s.value.split('.')[1] || '').length">{{ s.value }}</span><small v-if="s.unit">{{ s.unit }}</small></span>
+          <span class="big"><span v-count class="num">{{ s.value }}</span><small v-if="s.unit">{{ s.unit }}</small></span>
           <span class="l">{{ s.label }}</span>
           <span class="label">{{ s.note }}</span>
         </li>
@@ -52,7 +45,9 @@ onUnmounted(() => ctx?.revert())
 </template>
 
 <style scoped>
-.manifesto { border-top: 1px solid var(--line); }
+.manifesto { border-top: 1px solid var(--line); overflow: hidden; }
+.glyph { position: absolute; right: -2vw; top: 8%; font-size: clamp(200px, 34vw, 560px); font-weight: 800; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(238, 234, 226, 0.07); pointer-events: none; letter-spacing: -0.04em; font-family: 'Noto Serif KR', serif; }
+.manifesto .wrap { position: relative; }
 .grid { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(24px, 4vw, 64px); margin-top: 40px; }
 .lead { font-size: clamp(18px, 1.6vw, 22px); color: var(--ink-2); padding-top: 0.5em; }
 .body { font-size: clamp(26px, 3.4vw, 54px); font-weight: 700; letter-spacing: -0.04em; line-height: 1.28; }

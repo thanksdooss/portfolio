@@ -4,6 +4,7 @@ import { reduceMotion } from '../composables/useSmoothScroll.js'
 
 // 선도(Lines Plan)의 정면도(Body Plan): 왼쪽은 선미, 오른쪽은 선수 쪽 횡단면(station)들.
 // 처음엔 먹선이 그어지듯 그려지고, 포인터에 가장 가까운 station이 주황으로 켜지며 반폭(half-breadth)을 표시한다.
+const props = defineProps({ state: { type: Object, default: () => ({ zoom: 1, fade: 1, start: true }) } })
 const canvas = ref(null)
 let ctx, W = 0, H = 0, dpr = 1, raf = 0, t0 = 0, visible = true, io
 const pointer = { x: -1, y: -1, tx: 0, ty: 0, px: 0, py: 0 }
@@ -36,11 +37,13 @@ function resize() {
 
 function geom() {
   const mobile = W < 860
-  const size = mobile ? Math.min(W * 0.92, H * 0.5) : Math.min(W * 0.38, H * 0.7)
+  const z = props.state.zoom || 1
+  const size = (mobile ? Math.min(W * 0.92, H * 0.5) : Math.min(W * 0.38, H * 0.7)) * z
   return { cx: mobile ? W * 0.5 : W * 0.75, cy: mobile ? H * 0.3 : H * 0.42, B: size * 0.5, D: size * 0.62, mobile }
 }
 
 function draw(now) {
+  if (!props.state.start) { if (visible) raf = requestAnimationFrame(draw); return }
   if (!t0) t0 = now
   const t = (now - t0) / 1000
   const prog = reduceMotion ? 1 : Math.min(1, t / 2.6)
@@ -53,6 +56,8 @@ function draw(now) {
   const Y = (z) => base - z * D
 
   ctx.clearRect(0, 0, W, H)
+  ctx.globalAlpha = Math.max(0, props.state.fade ?? 1)
+  if (ctx.globalAlpha <= 0.01) { if (visible) raf = requestAnimationFrame(draw); return }
   ctx.lineCap = 'round'
 
   // 격자: 수선(waterline)과 버톡(buttock)

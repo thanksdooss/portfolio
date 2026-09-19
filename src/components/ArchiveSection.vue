@@ -4,6 +4,7 @@ import { archive } from '../data/archive.js'
 import { publishedProjects } from '../data/projects/index.js'
 import { useTrack } from '../composables/useTrack.js'
 import LightBox from './LightBox.vue'
+import { ScrollTrigger } from '../composables/useSmoothScroll.js'
 
 const { track } = useTrack()
 const base = import.meta.env.BASE_URL
@@ -21,13 +22,13 @@ const lightboxIndex = ref(-1)
 </script>
 
 <template>
-  <section id="archive" class="sec archive">
+  <section id="archive" class="sec archive" data-section="Archive">
     <div class="wrap">
       <div class="sec-head">
         <p class="label"><b>●</b>&nbsp; Archive</p>
         <p class="sec-desc">대표작 밖의 프로젝트, 수상, 설계 도면, 교육 이력. 모두 증빙 자료로 확인한 기록만 남겼습니다.</p>
       </div>
-      <h2 class="sec-title">전체 <span class="serif">기록</span></h2>
+      <h2 v-split class="sec-title">전체 <span class="serif">기록</span></h2>
 
       <div class="tabs" role="tablist" aria-label="아카이브 분류">
         <button v-for="t in tabs" :key="t.id" role="tab" type="button" :aria-selected="tab === t.id" :class="{ on: tab === t.id }" @click="tab = t.id">
@@ -35,7 +36,7 @@ const lightboxIndex = ref(-1)
         </button>
       </div>
 
-      <Transition name="swap" mode="out-in">
+      <Transition name="swap" mode="out-in" @after-enter="ScrollTrigger.refresh()">
         <div v-if="tab === 'projects'" key="p" class="list" role="tabpanel">
           <RouterLink v-for="p in projects" :key="p.id" :to="`/p/${p.id}`" class="row" data-cursor="View">
             <span class="when label">{{ p.period }}</span>
@@ -59,7 +60,7 @@ const lightboxIndex = ref(-1)
         <div v-else-if="tab === 'cad'" key="c" role="tabpanel">
           <div class="gallery">
             <button v-for="(g, i) in archive.cad" :key="g.src" type="button" class="shot" data-cursor="Zoom" @click="lightboxIndex = i">
-              <span class="frame"><img :src="base + g.thumb" :alt="g.title" loading="lazy" decoding="async" /></span>
+              <span v-clip class="frame"><img :src="base + g.thumb" :alt="g.title" loading="lazy" decoding="async" /></span>
               <span class="cap"><b>{{ g.title }}</b><span class="label">{{ g.tool }}</span></span>
             </button>
           </div>

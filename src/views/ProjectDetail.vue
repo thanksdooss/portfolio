@@ -74,7 +74,7 @@ watch(p, (v) => { if (v) document.title = `${v.title} — ${profile.name}` }, { 
 
     <div class="wrap">
       <ul v-if="p.metrics?.length" class="metrics">
-        <li v-for="m in p.metrics" :key="m.label"><b>{{ m.value }}</b><span>{{ m.label }}</span></li>
+        <li v-for="m in p.metrics" :key="m.label"><b v-count>{{ m.value }}</b><span>{{ m.label }}</span></li>
       </ul>
 
       <div class="body">
@@ -85,9 +85,9 @@ watch(p, (v) => { if (v) document.title = `${v.title} — ${profile.name}` }, { 
         </nav>
 
         <div class="content">
-          <section v-for="s in sections.slice(0, 4)" :id="'s-' + s.key" :key="s.key" :data-key="s.key" class="block">
+          <section v-for="s in sections.slice(0, 4)" :id="'s-' + s.key" :key="s.key" :data-key="s.key" :data-section="s.en" class="block">
             <p class="label"><b>{{ s.en }}</b></p>
-            <h2>{{ s.label }}</h2>
+            <h2 v-split>{{ s.label }}</h2>
             <div class="txt">
               <template v-for="(para, i) in s.key === 'result' ? resultBody : p[s.key]" :key="i">
                 <ul v-if="Array.isArray(para)"><li v-for="li in para" :key="li">{{ li }}</li></ul>
@@ -100,7 +100,7 @@ watch(p, (v) => { if (v) document.title = `${v.title} — ${profile.name}` }, { 
             </blockquote>
           </section>
 
-          <section id="s-tech" data-key="tech" class="block">
+          <section id="s-tech" data-key="tech" data-section="Stack" class="block">
             <p class="label"><b>Stack</b></p>
             <h2>기술</h2>
             <div class="stack">
@@ -111,7 +111,7 @@ watch(p, (v) => { if (v) document.title = `${v.title} — ${profile.name}` }, { 
             </div>
           </section>
 
-          <section v-if="p.survey" id="s-survey" data-key="survey" class="block">
+          <section v-if="p.survey" id="s-survey" data-key="survey" data-section="Data" class="block">
             <p class="label"><b>Data</b></p>
             <h2>{{ p.survey.title }}</h2>
             <div v-for="q in p.survey.items" :key="q.label" class="q">
@@ -126,12 +126,12 @@ watch(p, (v) => { if (v) document.title = `${v.title} — ${profile.name}` }, { 
             </div>
           </section>
 
-          <section v-if="p.gallery?.length" id="s-gallery" data-key="gallery" class="block">
+          <section v-if="p.gallery?.length" id="s-gallery" data-key="gallery" data-section="Gallery" class="block">
             <p class="label"><b>Gallery</b></p>
             <h2>자료</h2>
             <div class="gal">
               <button v-for="(g, i) in p.gallery" :key="g.src" type="button" class="shot" data-cursor="Zoom" @click="lightboxIndex = i">
-                <span class="frame"><img :src="base + g.src" :alt="g.title" loading="lazy" decoding="async" /></span>
+                <span v-clip class="frame"><img :src="base + g.src" :alt="g.title" loading="lazy" decoding="async" /></span>
                 <span class="cap">{{ g.title }}</span>
               </button>
             </div>
@@ -149,7 +149,9 @@ watch(p, (v) => { if (v) document.title = `${v.title} — ${profile.name}` }, { 
       <div class="wrap">
         <span class="label">Next case →</span>
         <span class="nt">{{ next.titleShort || next.title }}</span>
+        <span class="no">{{ next.oneLiner }}</span>
       </div>
+      <img v-if="next.thumb || next.cover" class="nthumb" :src="base + (next.thumb || next.cover)" alt="" aria-hidden="true" />
     </RouterLink>
     <LightBox v-if="lightboxIndex >= 0" :items="p.gallery" :start="lightboxIndex" @close="lightboxIndex = -1" />
   </article>
@@ -216,10 +218,15 @@ watch(p, (v) => { if (v) document.title = `${v.title} — ${profile.name}` }, { 
 .shot:hover .frame img { transform: scale(1.04); }
 .cap { display: block; padding: 10px 2px 0; font-size: 13.5px; color: var(--ink-2); }
 .note { padding: 24px 0 0; border-top: 1px dashed var(--line-2); display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: var(--ink-2); margin-bottom: 120px; }
-.nextp { display: block; border-top: 1px solid var(--line); padding: clamp(64px, 9vw, 140px) 0; background: var(--bg-2); transition: background .5s; }
+.nextp { display: block; position: relative; overflow: hidden; border-top: 1px solid var(--line); padding: clamp(64px, 9vw, 140px) 0; background: var(--bg-2); transition: background .5s; }
+.no { display: block; max-width: 560px; margin-top: 18px; color: var(--ink-2); font-size: 15px; transition: color .5s; }
+.nextp:hover .no { color: #0b0c0e; }
+.nthumb { position: absolute; right: var(--gutter); top: 50%; width: clamp(200px, 24vw, 380px); aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; transform: translateY(-50%) rotate(4deg) scale(0.8); opacity: 0; transition: opacity .5s, transform .8s var(--ease); pointer-events: none; }
+.nextp:hover .nthumb { opacity: 1; transform: translateY(-50%) rotate(-2deg) scale(1); }
+@media (max-width: 859px) { .nthumb { display: none; } .nt { max-width: none; } }
 .nextp:hover { background: var(--accent); color: #0b0c0e; }
 .nextp:hover .label { color: #0b0c0e; }
-.nt { display: block; margin-top: 16px; font-size: clamp(40px, 8vw, 128px); font-weight: 800; letter-spacing: -0.06em; line-height: 1; }
+.nt { display: block; max-width: calc(100% - clamp(220px, 27vw, 420px)); margin-top: 16px; font-size: clamp(40px, 8vw, 128px); font-weight: 800; letter-spacing: -0.06em; line-height: 1; }
 .missing { padding: 200px var(--gutter); }
 @media (max-width: 859px) {
   .meta { grid-template-columns: 1fr 1fr; }

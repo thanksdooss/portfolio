@@ -1,8 +1,9 @@
 import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { SplitText } from 'gsap/SplitText'
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, SplitText)
 
 // Lenis(관성 스크롤)와 GSAP ScrollTrigger를 한 타이머로 묶는다. 앱에서 한 번만 호출.
 let lenis = null
@@ -26,4 +27,6 @@ export function scrollToTarget(target, opts = {}) {
   }
 }
 
-export { gsap, ScrollTrigger }
+export function getLenis() { return lenis }
+
+export { gsap, ScrollTrigger, SplitText }
