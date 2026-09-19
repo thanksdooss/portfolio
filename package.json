@@ -1,0 +1,22 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:sales": "VITE_TRACK=sales vite build",
+    "preview": "vite preview",
+    "check:privacy": "node scripts/privacy-check.mjs",
+    "pdf": "node scripts/make-pdf.mjs"
+  },
+  "dependencies": {
+    "vue": "^3.5.0",
+    "vue-router": "^5.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.0",
+    "vite": "^8.0.0"
+  }
+}

@@ -1,0 +1,60 @@
+export default {
+  id: 'digital-twin',
+  sort: 2025.06,
+  title: '공장 자동화 디지털트윈 — Inventor → PLC → C# → Unity',
+  oneLiner: '컨베이어 설비를 직접 모델링하고, PLC 신호가 C# Modbus 서버를 거쳐 Unity 가상 설비를 움직이는 파이프라인을 혼자 구현했습니다.',
+  period: '2025.03 – 2025.06',
+  context: '삼성전자 캡스톤 트랙 · 다학제 캡스톤 (학점교류 과목)',
+  roleShort: '개인 최종 과제 전 과정 + EDGE팀 팀장',
+  team: '개인 구현 / 팀 PoC는 3개 대학 연합 4인 EDGE팀 (팀장)',
+  award: null,
+  cover: 'img/dt/integrated.webp',
+  thumb: 'img/dt/unity.webp',
+  thumbPos: '45% 30%',
+  coverAlt: 'XG5000 PLC 래더, C# PLC Server, Unity 컨베이어가 동시에 실행 중인 화면',
+  coverCaption: 'PLC 시뮬레이터(좌) → C# PLC Server(우상) → Unity 가상 컨베이어(우하)가 한 화면에서 연동',
+  metrics: [
+    { value: '4단계', label: '설계 → 제어 → 통신 → 시각화' },
+    { value: 'Modbus TCP', label: 'C#으로 서버 직접 작성' },
+    { value: '팀장', label: '4인 연합팀 EDGE' },
+  ],
+  tags: ['Inventor', 'LS XG5000', 'C# WinForms', 'Modbus TCP', 'Unity 6', 'SmartThings'],
+  problem: [
+    '"디지털트윈"은 말은 많지만, 설계 도면과 제어 신호와 3D 화면이 실제로 어떻게 이어지는지 끝까지 해 본 사람은 드뭅니다. 기계 전공자로서 그 연결 고리를 손으로 직접 이어 보는 것이 목표였습니다.',
+    '동시에 팀 과제로는 3개 대학 학생들과 삼성 SmartThings Pro를 활용한 제조 현장 PoC를 기획해야 했습니다.',
+  ],
+  approach: [
+    '공개 강좌(유튜브 디지털트윈 시리즈)의 흐름을 뼈대로 삼고, 설비 모델과 통신부는 제 설계로 바꿔 끝까지 구현했습니다.',
+    [
+      'STEP 1 설계: Inventor로 컨베이어(좌·우·하판, 축, 풀리, 벨트)와 PLC 랙 베이스·덕트 모델링. PLC 모듈·서보는 제조사 STEP 파일 사용',
+      'STEP 2 제어: LS XG5000 래더 프로그램을 XG-SIM으로 구동, C# WinForms 앱이 PLC D 레지스터를 읽고 씀',
+      'STEP 3 통신: 라이브러리 없이 TcpListener로 Modbus TCP 서버를 직접 작성',
+      'STEP 4 시각화: Unity 6가 Modbus 클라이언트로 접속해 가상 컨베이어를 PLC 신호대로 구동',
+    ],
+  ],
+  role: [
+    '개인 최종 과제는 설계부터 Unity 연동까지 전 과정을 혼자 했습니다.',
+    '팀 과제에서는 EDGE팀 팀장으로 PoC 주제를 세 차례 발전시켰습니다: 지역 중소기업 에너지 절감 → 조선소 블록·도장 공장 에너지 절감(SmartThings Pro 센서·루틴) → 최종적으로 삼성 발표용 "AI 카메라 × SmartThings Pro 연동 중대재해 예방 안전관제" PoC.',
+  ],
+  result: [
+    'PLC 신호가 가상 설비를 실시간으로 움직이는 데모를 최종 발표(2025.06.23)에서 영상과 함께 시연했습니다.',
+    '배운 점: 디지털트윈의 핵심은 3D 그래픽보다 "어떤 신호를 어떤 주기로 어디에서 어디로 보내는가"라는 통신 설계에 있다는 것. 이 경험이 이후 지역 산학 캡스톤 "클린 팩토리"(팀장, 동상)로 이어졌습니다.',
+  ],
+  tech: [
+    { group: 'Mechanical', items: ['Autodesk Inventor', '조립도 · BOM'] },
+    { group: 'Control', items: ['LS XG5000', 'XG-SIM', 'Ladder'] },
+    { group: 'Software', items: ['C# (.NET 8)', 'WinForms', 'Modbus TCP', 'TcpListener'] },
+    { group: 'Visualization / IoT', items: ['Unity 6', 'SmartThings Pro (PoC 기획)'] },
+  ],
+  gallery: [
+    { src: 'img/dt/unity.webp', title: 'Unity 가상 컨베이어', tool: 'Unity 6' },
+    { src: 'img/dt/conveyor.webp', title: '컨베이어 조립도 · BOM', tool: 'Inventor' },
+    { src: 'img/dt/plc-rack.webp', title: 'PLC 랙 조립도', tool: 'Inventor (모듈은 제조사 STEP)' },
+  ],
+  links: [],
+  note: [
+    '파이프라인 구성은 공개 강좌 "디지털트윈으로 가는 길" 시리즈를 참고했고, 설비 모델과 C# 통신부는 직접 작성했습니다.',
+    'PLC 모듈·서보 모터 3D 모델은 제조사 제공 STEP 파일입니다.',
+  ],
+  pdf: { line: 'Inventor 설비 모델 → LS PLC → C# Modbus TCP 서버 → Unity 가상 설비 디지털트윈 개인 구현, 3개 대학 연합 EDGE팀 팀장' },
+}

@@ -1,0 +1,66 @@
+export default {
+  id: 'skala-marine',
+  sort: 2026.083,
+  title: 'SKALA marine — 실시간 해양기상 × 선박 운동 3D',
+  oneLiner: '지도에서 해역을 찍으면 실제 파고·조류·풍속을 받아, 그 바다에서 선박이 어떻게 흔들리고 기울고 느려지는지 3D로 보여줍니다.',
+  period: '2026.08',
+  context: 'SKALA 4기 · Vue.js 과목 개인 과제',
+  roleShort: '개인 — Vue 대시보드·데이터 파이프라인·라이브러리 연동',
+  team: '개인 (강사 제공 Vue 템플릿 + 오픈소스 Vessel.js 활용)',
+  award: null,
+  cover: 'img/marine/live.webp',
+  thumb: 'img/marine/sim3d.webp',
+  thumbPos: 'center 70%',
+  coverAlt: 'SKALA marine 화면: 좌측 해역 지도, 우측 파도 위 선박 3D, 하단 해양 기상 지표',
+  coverCaption: '배포 중인 화면 — 좌: 해역 선택 지도, 우: Vessel.js 3D 선박, 하단: Open-Meteo 실측 지표',
+  metrics: [
+    { value: '4단계', label: '물리 시나리오 (운동·표류·경사·저항)' },
+    { value: '3종', label: 'Open-Meteo API (예보·해양·대기질)' },
+    { value: 'Live', label: 'Vercel 배포' },
+  ],
+  tags: ['Vue 3', 'Leaflet', 'Three.js', 'Vessel.js', 'Open-Meteo', 'Vercel'],
+  problem: [
+    '조선해양 수업에서 배운 RAO, 복원성, 저항은 교과서 속 그래프로만 남기 쉽습니다. "오늘 이 해역에 이 배를 띄우면 어떻게 될까?"라는 질문에 바로 답하는 도구를 만들어 보고 싶었습니다.',
+    'Vue 과목 과제로, 외부 API·지도·3D 렌더링을 한 화면에서 조율하는 대시보드를 설계하는 연습이기도 했습니다.',
+  ],
+  approach: [
+    '물리 계산은 검증된 오픈소스에 맡기고, 저는 데이터 흐름과 화면 설계, 시나리오 구성에 집중했습니다.',
+    [
+      'Leaflet 지도에서 해역을 클릭 → 좌표로 Open-Meteo 예보·해양·대기질 API 호출 (useOpenMeteo 컴포저블)',
+      '받은 파고(Hs)·주기(Tp)·파향으로 Vessel.js(NTNU ShipLab, MIT)의 파랑 운동 모델을 다시 구성해 6자유도 운동을 재생',
+      '4단계 시나리오: ① 규칙파 내 운동(RAO) ② 조류에 의한 표류 ③ 풍하중에 의한 경사(GM) ④ 부가저항·속도 손실(Holtrop 기반)',
+      '하단 텔레메트리 HUD에 heave·pitch·roll·수직가속도와 해양 지표를 실시간 표시',
+    ],
+  ],
+  role: [
+    '강사가 제공한 Vue 템플릿 위에서 해양 대시보드 기능 전체를 개인으로 개발했습니다.',
+    [
+      '직접 작성: MarineDashboard, PingOceanMap(지도·해역 선택), VesselJsSimulator(3D 연동 브리지), LiveMarineTelemetryHUD, useOpenMeteo',
+      '직접 작성: 시뮬레이션 페이지(원본 예제를 참고해 새로 구성), 표류각·풍경사각·속도 손실의 단순화 추정식',
+      '라이브러리 사용: 6자유도 운동(RAO), 복원성 GM 계산, Holtrop 기반 저항 계산은 Vessel.js 모듈을 그대로 사용',
+    ],
+  ],
+  result: [
+    '실제 기상 데이터로 움직이는 선박 3D 시뮬레이터를 Vercel에 배포했습니다. 모바일 레이아웃과 Electron 데스크톱 패키징까지 시도했습니다.',
+    '한계도 분명합니다. 표류·풍경사·속도 손실은 단순화한 경험식이라 실제 조종·복원 해석을 대신할 수 없습니다. 이 부분을 면접에서 먼저 짚고, 다음 단계로 무엇을 검증해야 하는지 설명할 수 있습니다.',
+  ],
+  tech: [
+    { group: 'Frontend', items: ['Vue 3', 'Composition API', 'Vite', 'Leaflet'] },
+    { group: '3D / Physics', items: ['Three.js', 'Vessel.js (NTNU ShipLab, MIT)'] },
+    { group: 'Data', items: ['Open-Meteo Forecast', 'Marine', 'Air Quality API'] },
+    { group: 'Deploy', items: ['Vercel', 'Electron (실험)'] },
+  ],
+  gallery: [
+    { src: 'img/marine/sim3d.webp', title: '파랑 중 선박 3D 운동', tool: 'Vessel.js · Three.js' },
+    { src: 'img/marine/live.webp', title: '전체 대시보드', tool: 'Vue 3 · Leaflet' },
+  ],
+  links: [
+    { label: '라이브 데모', url: 'https://skala-vue-marine.vercel.app' },
+    { label: 'GitHub', url: 'https://github.com/thanksdooss/skala-vue' },
+  ],
+  note: [
+    '저장소 초기 커밋 4개는 강사가 제공한 Vue 과목 템플릿입니다.',
+    '선박 운동·복원성·저항 계산은 오픈소스 Vessel.js(NTNU ShipLab, MIT License)를 사용했고, 제 기여는 Vue 대시보드·데이터 파이프라인·시나리오 구성과 단순화 추정식입니다.',
+  ],
+  pdf: { line: '실시간 해양기상(Open-Meteo) × Vessel.js 선박 운동 3D 대시보드를 Vue 3로 개인 개발·배포' },
+}

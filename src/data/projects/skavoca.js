@@ -1,0 +1,65 @@
+export default {
+  id: 'skavoca',
+  sort: 2026.082,
+  title: 'SKAVOCA — SKALA 교육생용 기술 용어 학습 서비스',
+  oneLiner: '9개 과목의 낯선 용어를 간격 반복(SM-2)으로 익히는 풀스택 웹 서비스를 설계 문서부터 배포까지 혼자 만들었습니다.',
+  period: '2026.08 – 2026.09',
+  context: 'SKALA 4기 · 미니 프로젝트 (개인)',
+  roleShort: '개인 — 기획·설계·프론트·백엔드·배포',
+  team: '개인',
+  award: null,
+  cover: 'img/skavoca/dashboard.webp',
+  thumbPos: 'center top',
+  coverAlt: 'SKAVOCA 대시보드: 오늘의 학습 세션, 주간 리그, 과목별 진도',
+  coverCaption: '학습 대시보드 — 오늘의 맞춤 세션, 주간 리그, 과목별 진도',
+  metrics: [
+    { value: '4종', label: '설계 문서 (요구사항·화면·ERD·API)' },
+    { value: '270개', label: '과목별 기술 용어' },
+    { value: 'JWT', label: '인증 · 권한 분리' },
+  ],
+  tags: ['Vue 3', 'Pinia', 'Spring Boot 3', 'JPA', 'PostgreSQL', 'Render'],
+  problem: [
+    'SKALA는 7월부터 Git, SQL, Java, Vue, MSA, LLM까지 과목이 빠르게 바뀝니다. 교육생들이 새 용어를 외울 틈 없이 다음 과목으로 넘어간다는 문제를 제 경험에서 발견했습니다.',
+  ],
+  approach: [
+    '"매일 5분, 잊어버릴 때쯤 다시 묻는다"를 핵심으로 잡고, 코드를 쓰기 전에 요구사항 정의서 → 화면 설계서 → 데이터 모델링(ERD) → API 명세서를 먼저 작성했습니다.',
+    [
+      '학습 알고리즘: 서버에서 SM-2 간격 반복으로 다음 복습일을 계산',
+      '문제 유형: 빈칸 채우기, 단어 블록, 스와이프 플래시카드. 오타는 레벤슈타인 거리로 관대하게 채점',
+      '동기 부여: XP·티어·주간 리그, 과목별 숙련도 레이더 차트',
+      '운영: 강사용 어휘 관리 화면, 오프라인 풀이 일괄 동기화',
+    ],
+  ],
+  role: [
+    '기획부터 배포까지 전부 혼자 했습니다.',
+    [
+      'Frontend: Vue 3 + Pinia + vue-router, axios로 REST API 연동',
+      'Backend: Spring Boot 3.4 (Java 21), Spring Security + JWT(access 30분 / refresh 7일), BCrypt, 로그인 실패 잠금, 역할 기반 접근 제어',
+      'DB: PostgreSQL(Neon) — 사용자·과목·단어·학습 이력·리그 테이블 설계',
+      'Infra: Vercel(프론트) + Render Docker(백엔드), 무료 서버 슬립을 막는 GitHub Actions 스케줄 핑',
+    ],
+  ],
+  result: [
+    '실제 교육생이 쓸 수 있는 서비스로 배포했고, 설계 문서 4종을 저장소에 함께 공개했습니다.',
+    '이 프로젝트로 SKALA에서 배운 Vue·Spring Boot·REST API·SQL을 하나의 흐름으로 연결했습니다. 면접에서 인증 흐름, ERD 설계 이유, 배포 구조를 화이트보드로 설명할 수 있습니다.',
+  ],
+  tech: [
+    { group: 'Frontend', items: ['Vue 3', 'Pinia', 'vue-router', 'axios', 'Vite'] },
+    { group: 'Backend', items: ['Java 21', 'Spring Boot 3.4', 'Spring Security', 'JPA', 'jjwt', 'springdoc'] },
+    { group: 'Data / Infra', items: ['PostgreSQL (Neon)', 'Docker', 'Render', 'Vercel', 'GitHub Actions'] },
+    { group: '설계 문서', items: ['요구사항 정의서', '화면 설계서', 'ERD', 'API 명세서'] },
+  ],
+  gallery: [
+    { src: 'img/skavoca/erd.webp', title: 'ERD — 마스터·학습 SRS·게임화 테이블', tool: 'Data Modeling' },
+    { src: 'img/skavoca/cloze.webp', title: '빈칸 채우기 퀴즈', tool: 'Vue 3' },
+    { src: 'img/skavoca/swipe.webp', title: '스와이프 플래시카드 복습', tool: 'Vue 3' },
+    { src: 'img/skavoca/catalog.webp', title: '어휘 카탈로그', tool: 'Vue 3' },
+    { src: 'img/skavoca/admin.webp', title: '강사용 통계·어휘 관리', tool: 'Vue 3 · Spring Boot' },
+  ],
+  links: [
+    { label: '라이브 서비스', url: 'https://skavoca-skala.vercel.app' },
+    { label: 'GitHub', url: 'https://github.com/thanksdooss/SKAVOCA' },
+  ],
+  note: ['서비스는 SKALA 통합 계정 로그인 후 이용할 수 있습니다. 화면의 사용자 데이터는 시연용 예시입니다.'],
+  pdf: { line: 'Vue 3 + Spring Boot + PostgreSQL 기술 용어 학습 서비스를 설계 문서 4종부터 배포까지 개인 개발' },
+}

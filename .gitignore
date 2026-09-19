@@ -1,0 +1,9 @@
+node_modules
+dist
+.DS_Store
+*.local
+.env
+.env.*
+# 비공개 검사어 목록 (저장소에 올리지 않음)
+.privacy-terms
+.claude/
