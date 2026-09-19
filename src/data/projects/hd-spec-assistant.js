@@ -1,5 +1,6 @@
 export default {
   id: 'hd-spec-assistant',
+  titleShort: 'Building Spec. 검증 AI',
   sort: 2025.12,
   title: 'AI 기반 Building Spec. 검증 Assistant',
   oneLiner: '선박 건조사양서와 계류·의장 설계를 대조하는 로컬 LLM 설계 보조 도구를 HD현대이엔티 설계 책임 2인과 함께 만들었습니다.',

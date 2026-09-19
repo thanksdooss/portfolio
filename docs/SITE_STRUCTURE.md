@@ -55,7 +55,18 @@ public/img/**                 웹용 WebP (메타데이터 제거, 학교명·�
 
 ## 기술·배포
 
-- Vue 3 (Composition API) + vue-router(해시 모드) + Vite, 외부 UI 라이브러리 없음
+- Vue 3 (Composition API) + vue-router(해시 모드) + Vite. 모션은 GSAP ScrollTrigger + Lenis, 첫 화면 선도(Body Plan)는 Canvas 2D로 직접 구현
 - GitHub Actions → GitHub Pages. 빌드 후 비공개 검사어로 결과물 전수 검사, 1건이라도 나오면 배포 중단
 - 모바일 우선 반응형, 이미지 지연 로딩, WebP, OG 태그(카카오톡 미리보기)
 - PDF: `npm run pdf` (Chrome 헤드리스로 `#/print` 인쇄)
+
+## 디자인 콘셉트 — 현도(現圖, Lofting)
+
+조선소에서 설계 도면의 선을 실물 크기로 옮기는 공정. "AI를 현장이 쓸 수 있는 크기로 옮긴다"는 일하는 방식을 시각 언어로 삼았다.
+
+- 색: 현도장 바닥 같은 먹색 배경 + 흰 먹선 + 방청 도료(primer)의 주황 한 점
+- 서체: Pretendard(국문 헤드라인, 굵고 좁은 자간) · Instrument Serif 이탤릭(영문 강조) · JetBrains Mono(도면 치수 문자 같은 라벨)
+- 첫 화면: 선도 정면도(Body Plan)가 먹선처럼 그려지고, 포인터에 가장 가까운 station이 주황으로 켜지며 반폭을 표시
+- 스크롤: 철학 문장이 단어 단위로 진해짐, SKALA 20과목은 가로로 흐르는 공정표(데스크톱 고정 스크롤)
+- 대표작: 큰 제목 행 + 커서를 따라오는 미리보기, 케이스 스터디는 고정 목차(스크롤 스파이)와 "배운 점" 인용구
+- `prefers-reduced-motion`이면 모든 모션을 끄고 정적으로 보여 준다

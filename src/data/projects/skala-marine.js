@@ -1,5 +1,6 @@
 export default {
   id: 'skala-marine',
+  titleShort: 'SKALA marine',
   sort: 2026.083,
   title: 'SKALA marine — 실시간 해양기상 × 선박 운동 3D',
   oneLiner: '지도에서 해역을 찍으면 실제 파고·조류·풍속을 받아, 그 바다에서 선박이 어떻게 흔들리고 기울고 느려지는지 3D로 보여줍니다.',

@@ -44,3 +44,19 @@ export const strengths = [
     proof: '부스 설명 이해도 4.5 / 5 (83명 응답)',
   },
 ]
+
+// 철학 — 조선소의 현도(Lofting) 공정에 빗댄 일하는 방식
+export const manifesto = {
+  label: 'Philosophy — 現圖 Lofting',
+  lead: '조선소에는 현도(現圖)라는 공정이 있습니다.',
+  body: '설계자가 도면에 그린 선을, 현장에서 강판을 자를 수 있는 실물 크기의 선으로 옮기는 일입니다. 저는 AI를 그렇게 다룹니다. 모델이 똑똑한 것에서 멈추지 않고, 설계자와 작업자가 내일 아침 실제로 쓸 수 있는 크기로 옮기는 것까지가 제 일이라고 생각합니다.',
+  sign: 'From the drawing, to the field.',
+}
+
+// 첫 화면 아래 숫자 띠 — 모두 증빙 파일로 확인된 값
+export const stats = [
+  { value: '우수상', label: 'HD현대이엔티 대표이사', note: '산학 협업 AI 프로젝트' },
+  { value: '대상', label: 'ICT통신&바이오헬스 해커톤', note: '팀장 · 발표' },
+  { value: '4.5', unit: '/5', label: 'AI 부스 설명 이해도', note: '방문객 83명 설문' },
+  { value: '4.46', unit: '/4.5', label: '누계 평점', note: '기계공학 · 조선해양 복수전공' },
+]

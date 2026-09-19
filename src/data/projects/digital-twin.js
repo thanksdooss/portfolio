@@ -1,5 +1,6 @@
 export default {
   id: 'digital-twin',
+  titleShort: '공장 자동화 디지털트윈',
   sort: 2025.06,
   title: '공장 자동화 디지털트윈 — Inventor → PLC → C# → Unity',
   oneLiner: '컨베이어 설비를 직접 모델링하고, PLC 신호가 C# Modbus 서버를 거쳐 Unity 가상 설비를 움직이는 파이프라인을 혼자 구현했습니다.',

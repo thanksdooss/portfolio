@@ -1,5 +1,6 @@
 export default {
   id: 'ai-booth',
+  titleShort: 'AI를 속여라!',
   sort: 2025.11,
   title: 'AI를 속여라! — 비전 AI 체험 부스',
   oneLiner: '부스를 기획하고 YOLOv8·MediaPipe 체험 앱을 직접 짜서, 6가지 체험 모드로 AI를 처음 접하는 방문객에게 "AI가 세상을 어떻게 보는지" 설명했습니다.',

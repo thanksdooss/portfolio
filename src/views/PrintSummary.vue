@@ -100,7 +100,7 @@ onMounted(() => (document.title = `${profile.name}_포트폴리오_요약`))
 @media screen { .print { background: #ddd; padding: 16px 0; } .page { margin-bottom: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.15); } }
 @media print { .page { break-after: page; } .page:last-child { break-after: auto; } }
 .top { display: flex; justify-content: space-between; gap: 16px; border-bottom: 2px solid #0f2a47; padding-bottom: 8mm; }
-.eyebrow { color: #b8430a; }
+.eyebrow { color: #b8430a; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
 h1 { font-size: 26px; margin: 4px 0 6px; }
 h1 small { display: block; font-size: 15px; color: #b8430a; font-weight: 700; margin-top: 2px; }
 .sub { font-size: 12.5px; color: var(--ink-2); max-width: 125mm; }
@@ -134,4 +134,6 @@ h2 { font-size: 14px; margin: 6mm 0 3mm; padding-bottom: 1.5mm; border-bottom: 1
 <style>
 @page { size: A4; margin: 0; }
 @media print { body { background: #fff !important; } }
+html:has(.print), html:has(.print) body { background: #ddd; color-scheme: light; }
+html:has(.print) body::after { display: none; }
 </style>

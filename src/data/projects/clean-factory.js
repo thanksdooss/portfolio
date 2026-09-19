@@ -1,5 +1,6 @@
 export default {
   id: 'clean-factory',
+  titleShort: '클린 팩토리',
   sort: 2026.02,
   title: '클린 팩토리 — 저비용 스마트팩토리 교육 모델',
   oneLiner: '3D 프린팅 6축 로봇팔·컨베이어와 Unity 디지털트윈으로, 지역 학생이 스마트팩토리를 직접 만져 보는 교육 키트를 만들었습니다.',

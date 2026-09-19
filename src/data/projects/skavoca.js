@@ -1,5 +1,6 @@
 export default {
   id: 'skavoca',
+  titleShort: 'SKAVOCA',
   sort: 2026.082,
   title: 'SKAVOCA — SKALA 교육생용 기술 용어 학습 서비스',
   oneLiner: '9개 과목의 낯선 용어를 간격 반복(SM-2)으로 익히는 풀스택 웹 서비스를 설계 문서부터 배포까지 혼자 만들었습니다.',

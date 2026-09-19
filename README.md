@@ -9,7 +9,7 @@
 
 ## 스택
 
-Vue 3 (Composition API) · vue-router · Vite · GitHub Actions → GitHub Pages
+Vue 3 (Composition API) · vue-router · Vite · GSAP ScrollTrigger · Lenis · Canvas 2D · GitHub Actions → GitHub Pages
 
 ## 명령어
 
