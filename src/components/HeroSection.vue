@@ -51,7 +51,7 @@ h1 span { display: block; }
 .art { width: 100%; max-width: 440px; justify-self: end; }
 @media (max-width: 859px) {
   .grid { grid-template-columns: 1fr; }
-  .art { order: -1; max-width: 300px; justify-self: start; margin-bottom: -8px; }
+  .art { max-width: 280px; justify-self: center; margin-top: 8px; }
   .hero { padding-top: 28px; }
 }
 </style>

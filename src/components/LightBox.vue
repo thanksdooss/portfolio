@@ -33,6 +33,7 @@ onUnmounted(() => { window.removeEventListener('keydown', onKey); document.body.
         <figcaption>
           <b>{{ cur.title }}</b> <span>{{ cur.tool }}</span>
           <p v-if="cur.desc">{{ cur.desc }}</p>
+          <a class="orig" :href="base + cur.src" target="_blank" rel="noopener">원본 크게 보기 ↗</a>
         </figcaption>
       </figure>
       <button class="nav prev" type="button" aria-label="이전" @click="step(-1)">‹</button>
@@ -50,6 +51,7 @@ img { max-height: 74vh; width: auto; max-width: 100%; margin: 0 auto; background
 figcaption { color: #e9eef5; font-size: 14.5px; text-align: center; }
 figcaption span { color: #9fb0c4; font-family: var(--mono); font-size: 12px; margin-left: 6px; }
 figcaption p { color: #c6d1de; font-size: 13.5px; margin-top: 4px; max-width: 720px; margin-inline: auto; }
+.orig { display: inline-block; margin-top: 6px; color: #ffb27a; font-size: 13px; }
 .nav, .close { position: absolute; background: rgba(255,255,255,.1); color: #fff; border: 0; border-radius: 999px; width: 44px; height: 44px; font-size: 26px; cursor: pointer; }
 .nav:hover, .close:hover { background: rgba(255,255,255,.2); }
 .prev { left: 12px; top: 50%; }
