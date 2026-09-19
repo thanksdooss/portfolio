@@ -32,7 +32,7 @@ onUnmounted(() => { window.removeEventListener('scroll', onScroll); io?.disconne
 <template>
   <div class="prog" aria-hidden="true"><span ref="bar"></span></div>
   <Transition name="ind">
-    <div v-if="current.name" :key="current.name" class="ind label" aria-hidden="true">
+    <div v-if="current.name && current.name !== 'Index'" :key="current.name" class="ind label" aria-hidden="true">
       <b>{{ current.no }}</b> — {{ current.name }}
     </div>
   </Transition>

@@ -10,7 +10,8 @@ const { track } = useTrack()
 const root = ref(null)
 const head = ref(null)
 // 스크롤하면 선도가 실물 크기로 커지며(=현도) 흐려진다
-const loft = reactive({ zoom: 1, fade: 1, start: false })
+// knock: 도면 관례처럼 글자 자리에서 선을 끊을 요소들
+const loft = reactive({ zoom: 1, fade: 1, start: false, knock: '.hero .headline .wd, .hero .headline .line, .hero .sub, .hero .sign, .hero .inner > .label, .hero .facts > div' })
 let ctx, split, chars = [], raf = 0, mx = -9999, my = -9999
 
 // 커서 가까운 글자일수록 굵게(가변 폰트 wght 축)

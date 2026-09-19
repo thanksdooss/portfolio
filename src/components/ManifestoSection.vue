@@ -26,7 +26,7 @@ onUnmounted(() => ctx?.revert())
   <section id="philosophy" ref="root" class="sec manifesto" data-section="Philosophy">
     <span class="glyph" aria-hidden="true">現圖</span>
     <div class="wrap">
-      <p class="label"><b>●</b>&nbsp; {{ manifesto.label }}</p>
+      <p class="label"><b>●</b>&nbsp; <span v-scramble>{{ manifesto.label }}</span></p>
       <div class="grid">
         <p class="lead">{{ manifesto.lead }}</p>
         <p class="body"><template v-for="(w, i) in words" :key="i"><span class="w">{{ w }}</span>{{ ' ' }}</template></p>

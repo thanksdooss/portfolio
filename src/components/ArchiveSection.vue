@@ -25,7 +25,7 @@ const lightboxIndex = ref(-1)
   <section id="archive" class="sec archive" data-section="Archive">
     <div class="wrap">
       <div class="sec-head">
-        <p class="label"><b>●</b>&nbsp; Archive</p>
+        <p class="label"><b>●</b>&nbsp; <span v-scramble>Archive</span></p>
         <p class="sec-desc">대표작 밖의 프로젝트, 수상, 설계 도면, 교육 이력. 모두 증빙 자료로 확인한 기록만 남겼습니다.</p>
       </div>
       <h2 v-split class="sec-title">전체 <span class="serif">기록</span></h2>

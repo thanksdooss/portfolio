@@ -38,8 +38,12 @@ function resize() {
 function geom() {
   const mobile = W < 860
   const z = props.state.zoom || 1
-  const size = (mobile ? Math.min(W * 0.92, H * 0.5) : Math.min(W * 0.38, H * 0.7)) * z
-  return { cx: mobile ? W * 0.5 : W * 0.75, cy: mobile ? H * 0.3 : H * 0.42, B: size * 0.5, D: size * 0.62, mobile }
+  const base = mobile ? Math.min(W * 0.84, H * 0.5) : Math.min(W * 0.34, H * 0.66)
+  const B = (base * z) / 2, D = base * z * 0.62
+  const gutter = Math.max(16, Math.min(56, W * 0.04))
+  // 기선 끝(±1.3B)과 라벨까지 화면 안에 들어오게 중심을 잡는다
+  const cx = mobile ? W / 2 : Math.min(W * 0.74, W - gutter - (base / 2) * 1.3 - 8)
+  return { cx, cy: mobile ? H * 0.3 : H * 0.44, B, D, mobile, gutter }
 }
 
 function draw(now) {
@@ -47,7 +51,7 @@ function draw(now) {
   if (!t0) t0 = now
   const t = (now - t0) / 1000
   const prog = reduceMotion ? 1 : Math.min(1, t / 2.6)
-  const { cx, cy, B, D, mobile } = geom()
+  const { cx, cy, B, D, mobile, gutter } = geom()
   pointer.px += (pointer.tx - pointer.px) * 0.06
   pointer.py += (pointer.ty - pointer.py) * 0.06
   const ox = cx + pointer.px * 14, oy = cy + pointer.py * 10
@@ -86,8 +90,8 @@ function draw(now) {
   // station 곡선
   stations.forEach((st, i) => {
     for (const side of [-1, 1]) {
-      const delay = (i / N) * 0.45 + (side > 0 ? 0.08 : 0)
-      const p = Math.max(0, Math.min(1, (prog - delay) / 0.55))
+      const delay = (i / (N - 1)) * 0.34 + (side > 0 ? 0.06 : 0) // 최대 0.40 + 0.55 < 1 → 전부 완성
+      const p = prog >= 1 ? 1 : Math.max(0, Math.min(1, (prog - delay) / 0.55))
       if (p <= 0) continue
       const count = Math.max(2, Math.floor(st.pts.length * p))
       const on = i === hi && side === hiSide
@@ -113,7 +117,24 @@ function draw(now) {
     ctx.stroke()
     ctx.fillStyle = `rgba(143,211,200,${0.7 * a})`
     ctx.font = '10px "JetBrains Mono", monospace'
-    ctx.fillText('DWL', mobile ? 12 : ox - B * 1.3, wl - 8)
+    ctx.fillText('DWL', mobile ? gutter : Math.max(gutter, ox - B * 1.3), wl - 8)
+  }
+
+  // 도면 관례: 문자가 놓인 자리에서는 선을 끊는다(텍스트 상자만큼 지우기)
+  if (props.state.knock && !mobile) {
+    const cr = canvas.value.getBoundingClientRect()
+    const els = document.querySelectorAll(props.state.knock)
+    const hasWords = document.querySelector('.hero .headline .wd')
+    const range = document.createRange()
+    els.forEach((el) => {
+      if (hasWords && el.classList.contains('line')) return // 단어로 쪼개진 뒤에는 단어 단위로
+      // 블록 요소 전체 폭이 아니라 실제 글자가 차지한 범위만 지운다
+      range.selectNodeContents(el)
+      const r = el.classList.contains('wd') ? el.getBoundingClientRect() : range.getBoundingClientRect()
+      if (!r.width) return
+      const padX = el.classList.contains('wd') ? r.height * 0.06 : 10
+      ctx.clearRect(r.left - cr.left - padX, r.top - cr.top + r.height * 0.04, r.width + padX * 2, r.height * 0.92)
+    })
   }
 
   // 치수·라벨
@@ -122,9 +143,9 @@ function draw(now) {
   ctx.textAlign = 'center'
   ctx.fillText('C L', ox, top - 44)
   ctx.textAlign = 'left'
-  ctx.fillText('AFT ←', ox - B * 1.3, base + 22)
+  ctx.fillText('AFT ←', Math.max(gutter, ox - B * 1.3), base + 22)
   ctx.textAlign = 'right'
-  ctx.fillText('→ FWD', ox + B * 1.3, base + 22)
+  ctx.fillText('→ FWD', Math.min(W - gutter, ox + B * 1.3), base + 22)
   ctx.textAlign = 'left'
 
   if (hi >= 0) {
@@ -134,8 +155,11 @@ function draw(now) {
     ctx.fillStyle = '#ff5a1f'
     ctx.beginPath(); ctx.arc(lx, ly, 3.5, 0, Math.PI * 2); ctx.fill()
     ctx.font = '11px "JetBrains Mono", monospace'
-    ctx.textAlign = hiSide > 0 ? 'left' : 'right'
-    ctx.fillText(label, lx + hiSide * 10, ly - 10)
+    const tw = ctx.measureText(label).width
+    let tx = lx + hiSide * 10
+    if (hiSide > 0 && tx + tw > W - gutter) tx = W - gutter - tw
+    ctx.textAlign = 'left'
+    ctx.fillText(label, hiSide > 0 ? tx : Math.max(gutter, tx - tw), ly - 10)
     ctx.textAlign = 'left'
   }
 

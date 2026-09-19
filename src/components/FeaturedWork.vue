@@ -12,7 +12,7 @@ const featured = computed(() => track.featured.map(getProject).filter(Boolean))
   <section id="work" class="sec work" data-section="Work">
     <div class="wrap">
       <div class="sec-head">
-        <p class="label"><b>●</b>&nbsp; Selected Work — {{ featured.length }}</p>
+        <p class="label"><b>●</b>&nbsp; <span v-scramble>Selected Work — {{ featured.length }}</span></p>
         <p class="sec-desc">{{ track.workDesc }}</p>
       </div>
       <h2 v-split class="sec-title">{{ track.workTitle }}</h2>

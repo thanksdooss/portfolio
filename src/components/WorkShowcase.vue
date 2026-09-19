@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { useRouter } from 'vue-router'
 import { gsap, ScrollTrigger, reduceMotion } from '../composables/useSmoothScroll.js'
 
 // 데스크톱: 왼쪽 글이 한 작품씩 지나가고, 오른쪽 "도면 시트" 프레임은 고정된 채 그림(FIG.)만 바뀐다.
@@ -7,6 +8,7 @@ import { gsap, ScrollTrigger, reduceMotion } from '../composables/useSmoothScrol
 const props = defineProps({ projects: { type: Array, required: true } })
 const base = import.meta.env.BASE_URL
 const active = ref(0)
+const router = useRouter()
 const root = ref(null)
 let triggers = []
 
@@ -45,7 +47,7 @@ const pad = (n) => String(n).padStart(2, '0')
     </div>
 
     <div class="stage" aria-hidden="true">
-      <div class="sheet">
+      <div v-tilt="5" class="sheet" data-cursor="Open" @click="router.push(`/p/${projects[active].id}`)">
         <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
         <div class="frame">
           <template v-for="(p, i) in projects" :key="p.id">
@@ -76,7 +78,8 @@ const pad = (n) => String(n).padStart(2, '0')
 .row { display: flex; align-items: center; gap: 18px; }
 .m-img { display: none; }
 
-.stage { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; }
+.stage { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; pointer-events: auto; }
+.sheet { transform-style: preserve-3d; will-change: transform; cursor: pointer; }
 .sheet { position: relative; width: 100%; padding: 22px; border: 1px solid var(--line); background: var(--bg-2); }
 .tick { position: absolute; width: 14px; height: 14px; border-color: var(--accent); border-style: solid; border-width: 0; }
 .tl { left: -1px; top: -1px; border-left-width: 1px; border-top-width: 1px; }

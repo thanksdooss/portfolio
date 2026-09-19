@@ -36,7 +36,7 @@ onUnmounted(() => ctx?.revert())
   <section id="skala" class="skala" data-section="SKALA">
     <div ref="pin" class="pin">
       <div class="wrap head">
-        <p class="label"><b>●</b>&nbsp; SKALA 4th · {{ skala.period }}</p>
+        <p class="label"><b>●</b>&nbsp; <span v-scramble>SKALA 4th · {{ skala.period }}</span></p>
         <h2 v-split class="sec-title">과목마다, <span class="serif">남긴 것</span></h2>
         <p class="desc">{{ skala.title }} — {{ skala.desc }}</p>
       </div>

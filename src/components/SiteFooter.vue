@@ -25,7 +25,7 @@ async function copy() {
   <footer id="contact" class="ftr" data-section="Contact">
     <MarqueeBand :items="stack" :speed="50" />
     <div class="wrap body">
-      <p class="label"><b>●</b>&nbsp; Contact</p>
+      <p class="label"><b>●</b>&nbsp; <span v-scramble>Contact</span></p>
       <h2 v-split class="big">함께 옮길 <span class="serif">현장</span>을<br />찾고 있습니다.</h2>
       <div v-if="email" class="mailrow">
         <a v-magnetic="0.15" class="mail" :href="email.href" data-cursor="Mail">

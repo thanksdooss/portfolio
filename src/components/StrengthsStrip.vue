@@ -28,7 +28,7 @@ onUnmounted(() => ctx?.revert())
   <section ref="root" class="paper" data-section="Principles">
     <div class="wrap">
       <div class="sec-head">
-        <p class="label"><b>●</b>&nbsp; Principles</p>
+        <p class="label"><b>●</b>&nbsp; <span v-scramble>Principles</span></p>
         <p class="sec-desc">일하는 방식 세 가지. 각각을 이 사이트의 케이스 스터디로 증명합니다.</p>
       </div>
       <h2 v-split class="sec-title">일하는 <span class="serif">방식</span></h2>

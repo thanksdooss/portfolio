@@ -54,11 +54,49 @@ export const vCount = {
     const d = (txt.split('.')[1] || '').length
     const o = { n: 0 }
     el.textContent = (0).toFixed(d)
-    gsap.to(o, { n: v, duration: 1.8, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 92%', once: true }, onUpdate: () => (el.textContent = o.n.toFixed(d)) })
+    gsap.to(o, { n: v, duration: 1.8, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 92%', once: true }, onUpdate: () => (el.textContent = o.n.toFixed(d)), onComplete: () => (el.textContent = txt) })
   },
 }
 
+// v-scramble: 도면 라벨이 계측기 표시처럼 무작위 문자에서 최종 문구로 맞춰진다.
+const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/·—'
+export const vScramble = {
+  mounted(el) {
+    if (reduceMotion) return
+    const final = el.textContent
+    el._st = ScrollTrigger.create({
+      trigger: el, start: 'top 92%', once: true,
+      onEnter: () => {
+        const o = { p: 0 }
+        gsap.to(o, { p: 1, duration: 0.9, ease: 'power2.out', onUpdate: () => {
+          const n = Math.floor(final.length * o.p)
+          el.textContent = final.slice(0, n) + [...final.slice(n)].map((c) => (c === ' ' ? ' ' : GLYPHS[(Math.random() * GLYPHS.length) | 0])).join('')
+        }, onComplete: () => (el.textContent = final) })
+      },
+    })
+  },
+  unmounted(el) { el._st?.kill() },
+}
+
+// v-tilt: 커서 위치에 따라 살짝 기울어지는 도면 시트(데스크톱).
+export const vTilt = {
+  mounted(el, binding) {
+    if (reduceMotion || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+    const max = binding.value || 6
+    gsap.set(el, { transformPerspective: 1200 })
+    const rx = gsap.quickTo(el, 'rotationX', { duration: 0.8, ease: 'power3.out' })
+    const ry = gsap.quickTo(el, 'rotationY', { duration: 0.8, ease: 'power3.out' })
+    el._tm = (e) => { const r = el.getBoundingClientRect(); ry(((e.clientX - r.left) / r.width - 0.5) * max); rx(-((e.clientY - r.top) / r.height - 0.5) * max) }
+    el._tl = () => { rx(0); ry(0) }
+    el.addEventListener('pointermove', el._tm)
+    el.addEventListener('pointerleave', el._tl)
+  },
+  unmounted(el) { el.removeEventListener('pointermove', el._tm); el.removeEventListener('pointerleave', el._tl) },
+}
+
 export function installMotion(app) {
+  app.directive('scramble', vScramble)
+  app.directive('tilt', vTilt)
   app.directive('split', vSplit)
   app.directive('clip', vClip)
   app.directive('magnetic', vMagnetic)
