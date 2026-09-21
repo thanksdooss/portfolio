@@ -4,6 +4,7 @@ import { getProject, publishedProjects } from '../data/projects/index.js'
 import { profile } from '../data/profile.js'
 import { gsap, reduceMotion, scrollToTarget } from '../composables/useSmoothScroll.js'
 import LightBox from '../components/LightBox.vue'
+import { consumeFlip } from '../composables/flip.js'
 
 const props = defineProps({ id: { type: String, required: true } })
 const base = import.meta.env.BASE_URL
@@ -31,14 +32,41 @@ const resultBody = computed(() => (p.value?.result || []).filter((t) => !isLesso
 const lesson = computed(() => (p.value?.result || []).find(isLesson)?.replace(/^배운 점:\s*/, ''))
 
 let io, ctx
+
+// 목록에서 보던 그림이 제자리에서 표지 크기로 자라난다
+function runFlip({ src, rect }) {
+  const target = root.value.querySelector('.hero-img .clip')
+  if (!target) return
+  const clone = document.createElement('img')
+  clone.src = src
+  Object.assign(clone.style, {
+    position: 'fixed', zIndex: 240, objectFit: 'cover', borderRadius: '6px', pointerEvents: 'none',
+    top: rect.top + 'px', left: rect.left + 'px', width: rect.width + 'px', height: rect.height + 'px',
+  })
+  document.body.appendChild(clone)
+  gsap.set(target, { opacity: 0 })
+  requestAnimationFrame(() => {
+    const to = target.getBoundingClientRect()
+    gsap.to(clone, {
+      top: to.top, left: to.left, width: to.width, height: to.height,
+      duration: 0.9, ease: 'expo.inOut',
+      onComplete: () => {
+        gsap.to(target, { opacity: 1, duration: 0.35 })
+        gsap.to(clone, { opacity: 0, duration: 0.35, onComplete: () => clone.remove() })
+      },
+    })
+  })
+}
 function setup() {
   io?.disconnect(); ctx?.revert()
   if (!root.value) return
   io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && (activeSec.value = e.target.dataset.key)), { rootMargin: '-40% 0px -55% 0px' })
   root.value.querySelectorAll('[data-key]').forEach((el) => io.observe(el))
   if (reduceMotion) return
+  const flip = consumeFlip(props.id)
   ctx = gsap.context(() => {
-    gsap.from('.t-line > span', { yPercent: 105, duration: 1.3, ease: 'expo.out', stagger: 0.08, delay: 0.1 })
+    gsap.from('.t-line > span', { yPercent: 105, duration: 1.3, ease: 'expo.out', stagger: 0.08, delay: flip ? 0.35 : 0.1 })
+    if (flip) return runFlip(flip)
     gsap.from('.hero-img img', { scale: 1.15, duration: 1.8, ease: 'expo.out' })
     gsap.from('.hero-img .clip', { clipPath: 'inset(12% 8% 12% 8%)', duration: 1.6, ease: 'expo.out', delay: 0.2 })
   }, root.value)

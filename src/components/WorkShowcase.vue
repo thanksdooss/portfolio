@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { gsap, ScrollTrigger, reduceMotion } from '../composables/useSmoothScroll.js'
+import { captureFlip } from '../composables/flip.js'
 
 // 데스크톱: 왼쪽 글이 한 작품씩 지나가고, 오른쪽 "도면 시트" 프레임은 고정된 채 그림(FIG.)만 바뀐다.
 // 한 화면에 한 작품 — 스크롤 한 번에 알맞은 양의 정보만 보여 준다.
@@ -25,12 +26,18 @@ onMounted(async () => {
 onUnmounted(() => triggers.forEach((t) => t?.kill()))
 const img = (p) => base + (p.thumb || p.cover)
 const pad = (n) => String(n).padStart(2, '0')
+
+// 지금 보이는 도면을 그대로 케이스 스터디 표지로 이어 준다
+function open(e, p) {
+  captureFlip(p.id, e.currentTarget.querySelector('.frame img.show') || e.currentTarget.querySelector('img'))
+  router.push(`/p/${p.id}`)
+}
 </script>
 
 <template>
   <div ref="root" class="show">
     <div class="steps">
-      <article v-for="(p, i) in projects" :key="p.id" class="step" :class="{ on: active === i }">
+      <article v-for="(p, i) in projects" :key="p.id" class="step" :class="{ on: active === i }" data-cursor="Open" @click="$event.target.closest('a') || open($event, p)">
         <img v-if="p.thumb || p.cover" class="m-img" :src="img(p)" :alt="p.coverAlt || p.title" loading="lazy" />
         <p class="st label">{{ pad(i + 1) }} / {{ pad(projects.length) }} — {{ p.context }}</p>
         <h3 class="st title">{{ p.titleShort || p.title }}</h3>
@@ -47,7 +54,7 @@ const pad = (n) => String(n).padStart(2, '0')
     </div>
 
     <div class="stage" aria-hidden="true">
-      <div v-tilt="5" class="sheet" data-cursor="Open" @click="router.push(`/p/${projects[active].id}`)">
+      <div v-tilt="5" class="sheet" data-cursor="Open" @click="open($event, projects[active])">
         <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
         <div class="frame">
           <template v-for="(p, i) in projects" :key="p.id">
@@ -67,7 +74,7 @@ const pad = (n) => String(n).padStart(2, '0')
 
 <style scoped>
 .show { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 5vw, 96px); }
-.step { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; gap: 22px; padding: 10vh 0; opacity: 0.28; transition: opacity .6s var(--ease); }
+.step { cursor: pointer; min-height: 88vh; display: flex; flex-direction: column; justify-content: center; gap: 22px; padding: 10vh 0; opacity: 0.28; transition: opacity .6s var(--ease); }
 .step.on { opacity: 1; }
 .title { font-size: clamp(38px, 4.8vw, 84px); font-weight: 800; letter-spacing: -0.055em; line-height: 1; }
 .one { font-size: clamp(16px, 1.3vw, 19px); color: var(--ink-2); line-height: 1.7; max-width: 560px; }

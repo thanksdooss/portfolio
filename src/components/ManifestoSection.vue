@@ -23,7 +23,7 @@ onUnmounted(() => ctx?.revert())
 </script>
 
 <template>
-  <section id="philosophy" ref="root" class="sec manifesto" data-section="Philosophy">
+  <section id="philosophy" ref="root" v-cut class="sec manifesto" data-section="Philosophy">
     <span class="glyph" aria-hidden="true">現圖</span>
     <div class="wrap">
       <p class="label"><b>●</b>&nbsp; <span v-scramble>{{ manifesto.label }}</span></p>

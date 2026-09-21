@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { gsap, reduceMotion } from '../composables/useSmoothScroll.js'
+import { hasFlip } from '../composables/flip.js'
 
 // 페이지 전환: 주황 절단선이 화면을 가로지르고, 먹색 판이 덮였다가 걷힌다(강판 절단 공정에서 착안).
 const router = useRouter()
@@ -10,7 +11,8 @@ const cut = ref(null)
 let first = true
 
 router.beforeEach(async (to, from) => {
-  if (first || reduceMotion || to.path === from.path || to.path === '/print') { first = false; return true }
+  const flipping = to.params?.id && hasFlip(to.params.id)
+  if (first || reduceMotion || flipping || to.path === from.path || to.path === '/print') { first = false; return true }
   await gsap.timeline()
     .set(panel.value, { display: 'block', clipPath: 'inset(100% 0 0 0)' })
     .fromTo(cut.value, { scaleX: 0, opacity: 1 }, { scaleX: 1, duration: 0.35, ease: 'expo.in', transformOrigin: 'left' })

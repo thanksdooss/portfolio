@@ -1,6 +1,8 @@
 # portfolio
 
-김진녕 포트폴리오 — 조선·제조 현장을 아는 AI 엔지니어
+김진녕 포트폴리오 — 현장을 읽을 수 있는 AI 엔지니어
+
+도면과 규정을 읽고, 모델을 만들고, 현장의 말로 설명합니다.
 
 **https://thanksdooss.github.io/portfolio/**
 
@@ -26,4 +28,4 @@ npm run check:privacy dist   # 빌드 결과물 공개 금지어 검사 (.privac
 - `src/config/site.config.js` — 지원 트랙(DT/기술영업)별 첫 화면 문구·대표작 순서
 - `src/data/projects/*.js` — 프로젝트 1개 = 파일 1개 (`_template.js` 복사해서 추가)
 - `src/data/skala.js`, `src/data/archive.js` — SKALA 타임라인, 수상·활동·CAD 갤러리
-- `docs/` — 콘텐츠 인벤토리, 사이트 구조안
+- `docs/` — 포지셔닝 전략, 콘텐츠 인벤토리, 사이트 구조안

@@ -7,6 +7,7 @@ import CustomCursor from './components/CustomCursor.vue'
 import ScrollProgress from './components/ScrollProgress.vue'
 import PageCurtain from './components/PageCurtain.vue'
 import PreLoader from './components/PreLoader.vue'
+import StickyCta from './components/StickyCta.vue'
 import { showPreloader } from './composables/intro.js'
 import { initSmoothScroll, scrollToTarget, ScrollTrigger } from './composables/useSmoothScroll.js'
 
@@ -26,6 +27,7 @@ router.afterEach(() => nextTick(() => { scrollToTarget(0, { immediate: true }); 
     <ScrollProgress />
     <PageCurtain />
     <SiteHeader />
+    <StickyCta />
   </template>
   <main id="main">
     <RouterView v-slot="{ Component, route: r }">

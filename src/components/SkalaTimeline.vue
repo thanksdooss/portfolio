@@ -33,7 +33,7 @@ onUnmounted(() => ctx?.revert())
 </script>
 
 <template>
-  <section id="skala" class="skala" data-section="SKALA">
+  <section id="skala" v-cut class="skala" data-section="SKALA">
     <div ref="pin" class="pin">
       <div class="wrap head">
         <p class="label"><b>●</b>&nbsp; <span v-scramble>SKALA 4th · {{ skala.period }}</span></p>

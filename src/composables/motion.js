@@ -94,7 +94,23 @@ export const vTilt = {
   unmounted(el) { el.removeEventListener('pointermove', el._tm); el.removeEventListener('pointerleave', el._tl) },
 }
 
+// v-cut: 섹션이 시작될 때 주황 절단선이 한 번 지나간다(강판 절단). 화면 전환의 공통 신호.
+export const vCut = {
+  mounted(el) {
+    if (reduceMotion) return
+    const line = document.createElement('span')
+    line.className = 'cut-line'
+    el.style.position = el.style.position || 'relative'
+    el.prepend(line)
+    el._st = gsap.timeline({ scrollTrigger: { trigger: el, start: 'top 85%', once: true } })
+      .fromTo(line, { scaleX: 0, transformOrigin: 'left' }, { scaleX: 1, duration: 0.7, ease: 'expo.inOut' })
+      .to(line, { transformOrigin: 'right', scaleX: 0, duration: 0.6, ease: 'expo.inOut' }, '+=0.15')
+  },
+  unmounted(el) { el._st?.scrollTrigger?.kill(); el._st?.kill() },
+}
+
 export function installMotion(app) {
+  app.directive('cut', vCut)
   app.directive('scramble', vScramble)
   app.directive('tilt', vTilt)
   app.directive('split', vSplit)
