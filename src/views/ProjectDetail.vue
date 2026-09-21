@@ -14,9 +14,12 @@ const next = computed(() => publishedProjects[(idx.value + 1) % publishedProject
 const lightboxIndex = ref(-1)
 const root = ref(null)
 const activeSec = ref('problem')
+const openTerm = ref(0)
 
 // 케이스 스터디 순서: 문제 → 접근 → 내 역할 → 결과 → 기술
 const sections = computed(() => [
+  ...(p.value?.why ? [{ key: 'why', label: '배경', en: 'Context' }] : []),
+  ...(p.value?.pains?.length ? [{ key: 'pains', label: '문제와 해결', en: 'Problem → Fix' }] : []),
   { key: 'problem', label: '문제', en: 'Problem' },
   { key: 'approach', label: '접근', en: 'Approach' },
   { key: 'role', label: '내 역할', en: 'My Role' },
@@ -113,7 +116,41 @@ watch(p, (v) => { if (v) document.title = `${v.title} — ${profile.name}` }, { 
         </nav>
 
         <div class="content">
-          <section v-for="s in sections.slice(0, 4)" :id="'s-' + s.key" :key="s.key" :data-key="s.key" :data-section="s.en" class="block">
+          <section v-if="p.why" id="s-why" data-key="why" data-section="Context" class="block why">
+            <p class="label"><b>Context</b></p>
+            <h2 v-split>왜 시작했나</h2>
+            <p class="whytext">{{ p.why }}</p>
+            <div v-if="p.glossary?.length" class="terms">
+              <p class="label">처음 보는 용어라면</p>
+              <div class="tchips">
+                <button
+                  v-for="(g, i) in p.glossary" :key="g.t" type="button"
+                  class="tchip" :class="{ on: openTerm === i }" :aria-expanded="openTerm === i"
+                  @click="openTerm = openTerm === i ? -1 : i"
+                >{{ g.t }}<span class="pm">{{ openTerm === i ? '−' : '+' }}</span></button>
+              </div>
+              <Transition name="tdef">
+                <p v-if="openTerm >= 0" :key="openTerm" class="tdef">{{ p.glossary[openTerm].d }}</p>
+              </Transition>
+            </div>
+          </section>
+
+          <section v-if="p.pains?.length" id="s-pains" data-key="pains" data-section="Problem → Fix" class="block">
+            <p class="label"><b>Problem → Fix</b></p>
+            <h2 v-split>어떤 불편을, 어떻게 풀었나</h2>
+            <ol class="pains">
+              <li v-for="(x, i) in p.pains" :key="i">
+                <span class="pno label">{{ String(i + 1).padStart(2, '0') }}</span>
+                <div class="pbody">
+                  <p class="pp"><span class="tag">불편</span>{{ x.p }}</p>
+                  <p class="pf"><span class="tag alt">한 일</span>{{ x.f }}</p>
+                  <p class="pr"><span class="tag ok">확인</span>{{ x.r }}</p>
+                </div>
+              </li>
+            </ol>
+          </section>
+
+          <section v-for="s in sections.filter((x) => ['problem', 'approach', 'role', 'result'].includes(x.key))" :id="'s-' + s.key" :key="s.key" :data-key="s.key" :data-section="s.en" class="block">
             <p class="label"><b>{{ s.en }}</b></p>
             <h2 v-split>{{ s.label }}</h2>
             <div class="txt">
@@ -225,6 +262,34 @@ watch(p, (v) => { if (v) document.title = `${v.title} — ${profile.name}` }, { 
 .txt ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; border-top: 1px solid var(--line); }
 .txt li { padding: 14px 0 14px 28px; border-bottom: 1px solid var(--line); position: relative; }
 .txt li::before { content: ''; position: absolute; left: 4px; top: 1.45em; width: 10px; height: 1px; background: var(--accent); }
+.whytext { font-size: clamp(19px, 1.9vw, 27px); line-height: 1.65; letter-spacing: -0.02em; color: var(--ink); max-width: 780px; }
+.terms { margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+.tchips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.tchip {
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px;
+  border: 1px solid var(--line-2); font-size: 13.5px; color: var(--ink-2); transition: color .3s, border-color .3s, background .3s;
+}
+.tchip:hover { color: var(--ink); border-color: var(--ink-3); }
+.tchip.on { background: var(--accent); border-color: var(--accent); color: #0b0c0e; font-weight: 600; }
+.tchip .pm { font-family: var(--mono); font-size: 12px; opacity: .7; }
+.tdef { margin-top: 16px; padding: 16px 18px; background: var(--bg-2); border-left: 2px solid var(--accent); font-size: 15.5px; color: var(--ink-2); line-height: 1.7; }
+.tdef-enter-active, .tdef-leave-active { transition: opacity .25s, transform .35s var(--ease); }
+.tdef-enter-from { opacity: 0; transform: translateY(-6px); }
+.tdef-leave-to { opacity: 0; }
+.pains { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 28px; }
+.pains li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.pains li:last-child { border-bottom: 0; padding-bottom: 0; }
+.pno { padding-top: 4px; color: var(--accent); }
+.pbody { display: flex; flex-direction: column; gap: 12px; }
+.pbody p { font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; }
+.pp { color: var(--ink); font-weight: 600; }
+.pf, .pr { color: var(--ink-2); }
+.pbody .tag {
+  display: inline-block; margin-right: 10px; padding: 2px 8px; border-radius: 4px; font-family: var(--mono);
+  font-size: 10.5px; letter-spacing: .08em; vertical-align: 2px; border: 1px solid var(--line-2); color: var(--ink-3);
+}
+.pbody .tag.alt { border-color: var(--accent); color: var(--accent-ink); }
+.pbody .tag.ok { border-color: var(--sea); color: var(--sea); }
 .quote { margin: 40px 0 0; padding: 32px 0 0; border-top: 1px solid var(--accent); }
 .quote p { font-size: clamp(22px, 2.3vw, 34px); font-weight: 700; letter-spacing: -0.04em; line-height: 1.4; margin-top: 16px; color: var(--ink); }
 .stack { display: flex; flex-direction: column; gap: 22px; }
