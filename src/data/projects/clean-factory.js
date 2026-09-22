@@ -81,7 +81,9 @@ export default {
     { src: 'img/cf/arm-line.webp', title: '로봇팔·컨베이어 라인 조립 (캡스톤)', tool: '3D 프린팅 · Arduino' },
     { src: 'img/cf/arm-close.webp', title: '6축 로봇팔 근접 (캡스톤)', tool: '3D 프린팅' },
   ],
-  links: [],
+  links: [
+    { label: '데모', url: 'https://clean-factory-thanksdooss.vercel.app' },
+  ],
   note: [
     '로봇팔·제어보드 설계와 원본 펌웨어는 오픈소스 "녹칸다"(github.com/nockanda/nockanda_robot) 기반입니다. 이 저장소에는 라이선스가 표기되어 있지 않아, 교육 플랫폼은 원본 코드·3D 파일을 담지 않고 링크로만 참조합니다.',
     '캡스톤 당시 팀의 원본 펌웨어 기여는 업스트림과 직접 대조해 확인했습니다: 센서 입력 3개, 텔레메트리 10→16필드, 비상정지(M1) 등 명령 3종 추가. 역기구학·동기화는 원본 그대로였습니다.',
