@@ -68,7 +68,7 @@ export default {
     '기획부터 배포까지 전부 혼자 했습니다.',
     [
       'Frontend: Vue 3 + Pinia + vue-router, axios로 REST API 연동',
-      'Backend: Spring Boot 3.4 (Java 21), Spring Security + JWT(access 30분 / refresh 7일), BCrypt, 로그인 실패 잠금, 역할 기반 접근 제어',
+      'Backend: Spring Boot 3.5 (Java 21), Spring Security + JWT(access 30분 / refresh 7일), BCrypt, 로그인 5회 실패 시 잠금, 역할 기반 접근 제어',
       'DB: PostgreSQL(Neon) — 사용자·과목·단어·학습 이력·리그 테이블 설계',
       'Infra: Vercel(프론트) + Render Docker(백엔드), 무료 서버 슬립을 막는 GitHub Actions 스케줄 핑',
     ],
@@ -81,7 +81,7 @@ export default {
   ],
   tech: [
     { group: 'Frontend', items: ['Vue 3', 'Pinia', 'vue-router', 'axios', 'Vite'] },
-    { group: 'Backend', items: ['Java 21', 'Spring Boot 3.4', 'Spring Security', 'JPA', 'jjwt', 'springdoc'] },
+    { group: 'Backend', items: ['Java 21', 'Spring Boot 3.5', 'Spring Security', 'JPA', 'jjwt', 'springdoc'] },
     { group: 'Data / Infra', items: ['PostgreSQL (Neon)', 'Docker', 'Render', 'Vercel', 'GitHub Actions'] },
     { group: '품질 / 운영', items: ['JUnit 5', 'Testcontainers', 'JaCoCo', 'Vitest', 'Playwright', 'k6', 'pg_stat_statements', 'Caffeine', 'Sentry', 'osv-scanner'] },
     { group: '설계 문서', items: ['요구사항 정의서', '화면 설계서', 'ERD', 'API 명세서'] },
